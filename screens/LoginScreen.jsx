@@ -146,21 +146,22 @@ const LoginScreen = () => {
 
             <View>
               <TouchableOpacity style={{ 
-                shadowColor: "black", 
-                shadowOffset: { 
-                  width: 0, 
-                  height: 2 
-                }, 
-                shadowOpacity: 0.25, 
-                shadowRadius: 3.84, 
-                elevation: 5, 
-                alignSelf: "center", 
-                backgroundColor: "rgb(248 250 252)", 
-                borderRadius: 100, 
-                width: "50%", 
-                marginVertical: "15%"
-                }}
-              onPress={handleLogin}
+                  shadowColor: "black", 
+                  shadowOffset: { 
+                    width: 0, 
+                    height: 2 
+                  }, 
+                  shadowOpacity: 0.25, 
+                  shadowRadius: 3.84, 
+                  elevation: 5, 
+                  alignSelf: "center", 
+                  backgroundColor: "rgb(248 250 252)", 
+                  borderRadius: 100, 
+                  width: "50%", 
+                  marginVertical: "10%",
+                  padding:6
+                  }}
+               onPress={handleLogin}
               >
                 <Text style={{ 
                   alignSelf: "center", 
