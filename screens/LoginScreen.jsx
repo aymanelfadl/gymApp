@@ -1,8 +1,27 @@
-import React from "react";
+import { useState } from "react";
 import { Image, Text, View, TextInput, TouchableOpacity, ScrollView } from "react-native";
 import FitFlexLogo from "../assets/Fitflex-HD.png";
+import { useNavigation } from "@react-navigation/native";
 
 const LoginScreen = () => {
+
+  const navigation = useNavigation();
+
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [errMessages, setErrMessages] = useState("");
+
+  // password forgots
+  const handleForgetPassword = () =>{
+    console.log("forget password");
+  }
+
+  // login backend 
+
+  const handleLogin = () =>{
+    navigation.navigate("Home");
+  }
+
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View style={{ 
@@ -74,10 +93,12 @@ const LoginScreen = () => {
                   paddingRight: 20, 
                   paddingLeft: 20, 
                   paddingTop: 10, 
-                  paddingBottom: 10 
+                  paddingBottom: 10,
                 }} 
                 placeholder="اسم المستخدم" 
-                placeholderTextColor="gray" 
+                placeholderTextColor="gray"
+                onChangeText={setUserName}
+                value={userName} 
               />
             </View>
 
@@ -108,11 +129,13 @@ const LoginScreen = () => {
                   paddingBottom: 10 
                 }} 
                 placeholder="كلمة المرور" 
-                placeholderTextColor="gray" 
+                placeholderTextColor="gray"
+                onChangeText={setPassword}
+                value={password} 
               />
             </View>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleForgetPassword}>
               <Text style={{ 
                 fontSize: 14, 
                 color: "white", 
@@ -135,8 +158,10 @@ const LoginScreen = () => {
                 backgroundColor: "rgb(248 250 252)", 
                 borderRadius: 100, 
                 width: "50%", 
-                marginVertical: "15%" 
-              }}>
+                marginVertical: "15%"
+                }}
+              onPress={handleLogin}
+              >
                 <Text style={{ 
                   alignSelf: "center", 
                   color: "gray", 
@@ -145,7 +170,17 @@ const LoginScreen = () => {
                 }}>تسجيل</Text>
               </TouchableOpacity>
             </View>
-
+            <View style={{
+              alignItems:"center"
+            }}>
+              <Text style={{
+                color:"red",
+                fontSize:24,
+                fontWeight:"700",
+              }}>
+                {errMessages}
+              </Text>
+            </View>
             <View style={{ 
               borderBottomWidth: 1, 
               borderBottomColor: "white", 
