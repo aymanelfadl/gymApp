@@ -8,6 +8,8 @@ import UsersScreen from './screens/UsersScreen';
 import MoneyScreen from './screens/MoneyScreen';
 import CustomTabBar from './components/CustomTabBar';
 import Header from './components/Header';
+import AddUserScreen from './screens/AddUSerScreen';
+import MembersScreen from './screens/MemebersScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -26,6 +28,19 @@ const HomeTabs = () => {
   );
 };
 
+const MemebrsTabs = () =>{
+  return (
+    <Tab.Navigator
+      screenOptions={{ headerShown: false, lazy: true }}
+      tabBarPosition='bottom'
+      tabBar={(props) => <CustomTabBar {...props} />}
+    >
+      <Tab.Screen name="لائحة العملاء" component={MembersScreen} />
+      <Tab.Screen name="إضافة عميل" component={AddUserScreen} />
+    </Tab.Navigator>
+  );
+}
+
 const HomeDrawer = () => {
   return (
     <Drawer.Navigator
@@ -33,9 +48,11 @@ const HomeDrawer = () => {
       gestureEnabled={true}
     >
       <Drawer.Screen name="Home" component={HomeTabs} />
+      <Drawer.Screen name="members" component={MemebrsTabs} />
     </Drawer.Navigator>
   );
 };
+
 
 const App = () => {
   return (

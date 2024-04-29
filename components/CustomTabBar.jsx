@@ -2,6 +2,10 @@ import React from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
 import CoinLogo from '../assets/coin.png';
 import ClientLogo from '../assets/customer.png';
+import AddUserLogo from "../assets/adduser.png";
+import AddUSerLogoWhite from "../assets/adduserwhite.png";
+import MembersLogo from "../assets/equipe.png";
+import MembersLogoWhite from "../assets/equipewhite.png"
 
 const CustomTabBar = ({ state, descriptors, navigation }) => {
   return (
@@ -53,11 +57,29 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
             key={index}
           >
             <View style={{flexDirection:"row-reverse"}}>
-                {label ==='العملاء' ? (
+                {
+                  label ==='العملاء' ? (
                     <Image source={ClientLogo} style={{ marginLeft:16, width: 28, height: 28 }} />
-                ) : label === 'النقود' ? (
+                  ): 
+                  label === 'النقود' ? (
                     <Image source={CoinLogo} style={{ marginLeft:16,width: 28, height: 28 }} />
-                ) : null}
+                  ): 
+                  label === 'لائحة العملاء' ? (
+                    isFocused ? (
+                      <Image source={MembersLogoWhite} style={{ marginLeft:16,width: 28, height: 28 }} />
+                    ):(
+                      <Image source={MembersLogo} style={{ marginLeft:16,width: 28, height: 28 }} />
+                    )
+
+                  ):
+                  label ==="إضافة عميل" ? (
+                    isFocused ? (
+                      <Image source={AddUSerLogoWhite} style={{ marginLeft:16,width: 28, height: 28 }} />
+                    ):(
+                      <Image source={AddUserLogo} style={{ marginLeft:16,width: 28, height: 28 }} />
+                    )
+                  ):
+                   null}
                 <Text style={{ color: isFocused ? 'white' : 'rgb(191 219 254)', fontSize:22}}>{label}</Text>
             </View>
 
