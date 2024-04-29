@@ -40,9 +40,9 @@ const HomeDrawer = () => {
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName='Login'>
         <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
-        <Stack.Screen name="Home" component={HomeDrawer} options={({ navigation }) => ({
+        <Stack.Screen name="HomeScreen" component={HomeDrawer} options={({ navigation }) => ({
             header: () => <Header />
           })} />
       </Stack.Navigator>

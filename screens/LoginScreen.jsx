@@ -19,7 +19,7 @@ const LoginScreen = (onLogin) => {
   // login backend 
 
   const handleLogin = () =>{
-    navigation.navigate("Home");
+    navigation.navigate("HomeScreen");
   }
 
   return (
