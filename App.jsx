@@ -29,7 +29,7 @@ const HomeTabs = () => {
 const HomeDrawer = () => {
   return (
     <Drawer.Navigator
-      screenOptions={{ headerShown: false }}
+      screenOptions={{ headerShown: false , drawerPosition:"right" }}
       gestureEnabled={true}
     >
       <Drawer.Screen name="Home" component={HomeTabs} />
