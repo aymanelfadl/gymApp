@@ -3,7 +3,7 @@ import { Image, Text, View, TextInput, TouchableOpacity, ScrollView } from "reac
 import FitFlexLogo from "../assets/Fitflex-HD.png";
 import { useNavigation } from "@react-navigation/native";
 
-const LoginScreen = () => {
+const LoginScreen = (onLogin) => {
 
   const navigation = useNavigation();
 
