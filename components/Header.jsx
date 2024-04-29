@@ -22,6 +22,11 @@ const Header = () => {
         justifyContent: 'space-between',
         height: windowHeight * 0.1,
         backgroundColor: 'white',
+        shadowColor: 'rgba(0, 0, 0,1)',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 1,
+        shadowRadius: 10,
+        elevation:12 
       }}>
       <View>
         <Image

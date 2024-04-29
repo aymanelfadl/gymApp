@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Image, ScrollView, Text, View, Dimensions } from 'react-native';
 import UsersLogo from '../assets/users.png';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -7,7 +7,7 @@ import PlusLogo from "../assets/plus.png";
 import NoMoneyLogo from "../assets/nomoney.png"
 
 const UsersScreen = () => {
-  const [totalIncome, setTotalIncome] = useState(0);
+  
   const [totalUsers, setTotalUsers] = useState(0);
 
   const windowHeight = Dimensions.get('window').height;
@@ -71,7 +71,7 @@ const UsersScreen = () => {
             </View>
             <View style={{ flex: 1, marginBottom:14,paddingHorizontal:10, paddingVertical:8 }}>
               <View style={{ backgroundColor: 'white', borderRadius: 30, shadowColor: 'rgba(0, 0, 0, 0.5)', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 1, shadowRadius: 8, elevation: 5}}>
-                  <ProgressBar data={50} total={100} IconLogo={PlusLogo} Date={"عملاء الأسبوع"} />
+                  <ProgressBar data={70} total={100} IconLogo={PlusLogo} Date={"عملاء الأسبوع"} />
               </View>
             </View>
             <View style={{ flex: 1, marginBottom:14,paddingHorizontal:10,  paddingVertical:8 }}>
