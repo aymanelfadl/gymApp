@@ -36,7 +36,7 @@ const Header = () => {
       <View style={{ justifyContent: 'center'}}>
         <TouchableOpacity onPress={toggleDrawer}>
           <Icon
-            name={isOpen ? 'menu-fold' : 'menu-unfold'}
+            name={isOpen ? 'menu-unfold' : 'menu-fold'}
             color="rgb(2 6 23)"
             size={30}
           />
