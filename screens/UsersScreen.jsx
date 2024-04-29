@@ -3,9 +3,7 @@ import { Image, ScrollView, Text, View, Dimensions } from 'react-native';
 import UsersLogo from '../assets/users.png';
 import Icon from 'react-native-vector-icons/AntDesign';
 import ProgressBar from '../components/ProgressBar';
-import DayLogo from "../assets/day.png";
-import WeekLogo from "../assets/week.png";
-import MonthLogo from "../assets/month.png"
+import PlusLogo from "../assets/plus.png";
 import NoMoneyLogo from "../assets/nomoney.png"
 
 const UsersScreen = () => {
@@ -16,7 +14,7 @@ const UsersScreen = () => {
   const windowWidth = Dimensions.get('window').width;
 
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1 ,backgroundColor:"white"}}>
       <View
         style={{
           flexDirection: 'column',
@@ -57,28 +55,28 @@ const UsersScreen = () => {
             </View>
           </View>
         </View>
-        <View style={{ backgroundColor: 'rgb(254 226 226)', borderRadius: 100, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5, padding: 10, marginBottom: 18,width:windowWidth*0.9 }}>
-          <ProgressBar data={100} total={100} Date={"العملاء بدون دفع"} MiniLogo={NoMoneyLogo} hasRedBorder={true} />
+        <View style={{ backgroundColor: 'rgb(254 226 226)', borderRadius: 100, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5, marginBottom: 18, width:windowWidth*0.9 }}>
+          <ProgressBar data={60} total={100} Date={"العملاء بدون دفع"} MiniLogo={NoMoneyLogo} hasRedBorder={true} />
         </View>
-        <View style={{width:windowWidth*0.9, backgroundColor: 'white', borderRadius: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5, padding: 12, marginBottom: 18 }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 15, paddingBottom: 10 }}>
-            <View style={{ flex: 1, borderBottomWidth: 4, borderBottomColor: '#3B82F6', marginRight:18,marginTop:6 }}/>
-              <Text style={{ fontSize:28, textAlign:"right",fontWeight: 'bold', color: '#3B82F6', marginRight:4 }}>العملاء</Text>
+        <View style={{width: windowWidth*0.9, backgroundColor: 'white', borderRadius: 20, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation:5 , marginBottom: 18 }}>
+          <View style={{ flexDirection: 'row', borderTopLeftRadius:20,borderTopRightRadius:20,paddingVertical:20,alignItems: 'center', backgroundColor: 'white', padding:10, marginBottom:10, shadowColor: 'rgba(0, 0, 0,0.4)', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 1, shadowRadius: 10, elevation:10, }}>
+            <View style={{ flex: 1,borderBottomWidth: 4, borderBottomColor: '#3B82F6', marginRight:18, marginTop:6 }}/>
+              <Text style={{ fontSize:28, textAlign:"right",fontWeight: 'bold', color: '#3B82F6', marginRight:14 }}>العملاء</Text>
           </View>
           <View>
-            <View style={{ flex: 1, marginBottom:14}}>
-              <View style={{ backgroundColor: 'white', borderRadius: 30, shadowColor: 'rgba(0, 0, 0, 0.5)', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 1, shadowRadius: 10, elevation: 8, paddingHorizontal: 20, paddingVertical: 10 }}>
-                  <ProgressBar data={100} total={100} IconLogo={DayLogo} Date={"عملاء اليوم"} />
+            <View style={{ flex: 1, marginBottom:14 , paddingHorizontal:10 , paddingVertical:8}}>
+              <View style={{ backgroundColor: 'white', borderRadius: 30, shadowColor: 'rgba(0, 0, 0, 0.5)', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 1, shadowRadius: 10, elevation: 8, }}>
+                  <ProgressBar data={100} total={100} IconLogo={PlusLogo} Date={"عملاء اليوم"} />
               </View>
             </View>
-            <View style={{ flex: 1, marginBottom:14 }}>
-              <View style={{ backgroundColor: 'white', borderRadius: 30, shadowColor: 'rgba(0, 0, 0, 0.5)', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 1, shadowRadius: 8, elevation: 5, paddingHorizontal: 20, paddingVertical: 10 }}>
-                  <ProgressBar data={50} total={100} IconLogo={WeekLogo} Date={"عملاء الأسبوع"} />
+            <View style={{ flex: 1, marginBottom:14,paddingHorizontal:10, paddingVertical:8 }}>
+              <View style={{ backgroundColor: 'white', borderRadius: 30, shadowColor: 'rgba(0, 0, 0, 0.5)', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 1, shadowRadius: 8, elevation: 5}}>
+                  <ProgressBar data={50} total={100} IconLogo={PlusLogo} Date={"عملاء الأسبوع"} />
               </View>
             </View>
-            <View style={{ flex: 1, marginBottom:14 }}>
-              <View style={{ backgroundColor: 'white', borderRadius: 30, shadowColor: 'rgba(0, 0, 0, 0.5)', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 1, shadowRadius: 8, elevation: 5, paddingHorizontal: 20, paddingVertical: 10 }}>
-                  <ProgressBar data={20} total={100} IconLogo={MonthLogo} Date={"عملاء الشهر"} />
+            <View style={{ flex: 1, marginBottom:14,paddingHorizontal:10,  paddingVertical:8 }}>
+              <View style={{ backgroundColor: 'white', borderRadius: 30, shadowColor: 'rgba(0, 0, 0, 0.5)', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 1, shadowRadius: 8, elevation: 5}}>
+                  <ProgressBar data={20} total={100} IconLogo={PlusLogo} Date={"عملاء الشهر"} />
               </View>
            </View>
           </View>

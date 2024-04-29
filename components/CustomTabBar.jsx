@@ -48,7 +48,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
               flex: 1,
               alignItems: 'center',
               padding: 20,
-              backgroundColor: isFocused ? 'rgb(191 219 254)' : 'white',
+              backgroundColor: isFocused ? 'rgb(37 99 235)' : 'white',
             }}
             key={index}
           >
