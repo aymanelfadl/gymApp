@@ -8,10 +8,11 @@ import AvatareLogo from "../assets/woman.png";
 import { SelectCountry } from 'react-native-element-dropdown';
 
 const MembersScreen = () => {
+  
     const windowHeight = Dimensions.get('window').height;
     const windowWidth = Dimensions.get('window').width;
     
-    const [data,setData] = useState([
+    const [data, setData] = useState([
         {
           id: 1,
           first_name: "John",
