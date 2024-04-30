@@ -80,7 +80,7 @@ const CustomTabBar = ({ state, descriptors, navigation }) => {
                     )
                   ):
                    null}
-                <Text style={{ color: isFocused ? 'white' : 'rgb(191 219 254)', fontSize:22}}>{label}</Text>
+                <Text style={{ color: isFocused ? 'white' : 'rgb(37 99 235)', fontSize:22}}>{label}</Text>
             </View>
 
           </TouchableOpacity>
