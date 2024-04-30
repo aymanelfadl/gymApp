@@ -22,7 +22,7 @@ const MembersScreen = () => {
           picture_file: AvatareLogo,
           created_at: "2024-04-1T11:06:24.000Z", // Today
           updated_at: "2024-04-18T11:06:24.000Z",
-          active: 0
+          active: 1
         },
         {
           id: 2,
@@ -34,7 +34,7 @@ const MembersScreen = () => {
           picture_file: AvatareLogo,
           created_at: "2024-04-25T11:08:24.000Z", // Within one week
           updated_at: "2024-04-18T11:08:24.000Z",
-          active: 0
+          active: 1
         },
         {
           id: 3,
@@ -46,7 +46,7 @@ const MembersScreen = () => {
           picture_file: AvatareLogo,
           created_at: "2024-03-01T11:08:24.000Z", // Within one month
           updated_at: "2024-04-18T11:08:24.000Z",
-          active: 0
+          active: 1
         },
         {
           id: 5,
@@ -58,7 +58,7 @@ const MembersScreen = () => {
           picture_file: AvatareLogo,
           created_at: "2023-04-01T11:08:24.000Z", // More than one month ago
           updated_at: "2024-04-18T11:08:24.000Z",
-          active: 0
+          active: 1
         },
         {
           id: 6,
@@ -70,7 +70,7 @@ const MembersScreen = () => {
           picture_file: AvatareLogo,
           created_at: "2023-11-01T11:08:24.000Z", // More than one month ago
           updated_at: "2024-04-18T11:08:24.000Z",
-          active: 0
+          active: 1
         },
         {
           id: 7,
@@ -82,7 +82,7 @@ const MembersScreen = () => {
           picture_file: AvatareLogo,
           created_at: "2022-03-10T11:08:24.000Z", // More than one month ago
           updated_at: "2024-04-18T11:08:24.000Z",
-          active: 0
+          active: 1
         },
         {
           id: 8,
@@ -125,6 +125,53 @@ const MembersScreen = () => {
     const [filterOption, setFilterOption] = useState('all');
 
 
+    const filterData = () => {
+      let filteredData = [...data];
+      
+      switch (filterOption) {
+          case "today":
+            filteredData = filteredData.filter((user) => {
+              const today = new Date().toISOString().split('T')[0];
+              const userDate = user.created_at.split('T')[0];
+              return user.active === 1 && userDate === today;
+            });
+            break;      
+          case "one_week":
+            filteredData = filteredData.filter((user) => {
+              const today = new Date().toISOString().split('T')[0];
+              const oneWeekLater = new Date(today);
+              oneWeekLater.setDate(oneWeekLater.getDate() - 7);
+              const finalDate = oneWeekLater.toISOString().split('T')[0];
+              const userDate = user.created_at.split('T')[0]; 
+              return user.active === 1 && finalDate <= userDate && userDate <= today; 
+            });
+          break;
+          case "one_month":
+            filteredData = filteredData.filter((user) => {
+              const today = new Date().toISOString().split('T')[0]; 
+              const oneMonthLater = new Date(today); 
+              oneMonthLater.setMonth(oneMonthLater.getMonth() - 1); 
+              const finaleDate = oneMonthLater.toISOString().split('T')[0]; 
+              const userDate = user.created_at.split('T')[0];
+              return user.active === 1 && finaleDate <= userDate && finaleDate <= today;
+            });
+            break;     
+          case "need_to_pay":
+            filteredData = filteredData.filter((user) => {
+              const today = new Date().toISOString().split('T')[0];
+              return user.active === 1 && user.end_date < today;
+            });
+            break;
+          case "end_date":
+            filteredData = filteredData.filter((user) => user.active === 0);
+            break;
+          default:
+            filteredData = filteredData.filter((user) => user.active === 1);
+      }
+
+      return filteredData;
+  };
+
     return (
     <View style={{flex:1, flexDirection:"column" ,}}>
             <View style={{
@@ -163,7 +210,7 @@ const MembersScreen = () => {
                     </View>
                     <TextInput
                         placeholder="بحث..."
-                        onChange={(e) => setSearchTerm(e.target.value)}
+                        onChangeText={(text) => setSearchTerm(text)}
                         placeholderTextColor="rgb(148 163 184)"
                         style={{
                             flex: 1,
@@ -179,31 +226,31 @@ const MembersScreen = () => {
                     />
                 </View>
                 <SelectCountry
-                style={styles.dropdown}
-                selectedTextStyle={styles.selectedTextStyle}
-                placeholderStyle={styles.placeholderStyle}
-                imageStyle={styles.imageStyle}
-                iconStyle={styles.iconStyle}
-                maxHeight={200}
-                value={filterOption}
-                data={[
-                  { label: 'الجميع', value: 'all' },
-                  { label: ' هذا اليوم', value: 'today' },
-                  { label: ' هذا أسبوع', value: 'one_week' },
-                  { label: ' هذا شهر', value: 'one_month' },
-                  { label: 'يحتاجون الدفع', value: 'need_to_pay' },
-                  { label: 'انتهت العضوية', value: 'end_date' },                  
-                ]}
-                valueField="value"
-                labelField="label"
-                placeholder="حدد تاريخ"
-                searchPlaceholder="Search..."
-                onChange={(item) => setFilterOption(item.value)}
+                  style={styles.dropdown}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  placeholderStyle={styles.placeholderStyle}
+                  imageStyle={styles.imageStyle}
+                  iconStyle={styles.iconStyle}
+                  maxHeight={200}
+                  value={filterOption}
+                  data={[
+                    { label: 'الجميع', value: 'all' },
+                    { label: ' هذا اليوم', value: 'today' },
+                    { label: ' هذا أسبوع', value: 'one_week' },
+                    { label: ' هذا شهر', value: 'one_month' },
+                    { label: 'يحتاجون الدفع', value: 'need_to_pay' },
+                    { label: 'انتهت العضوية', value: 'end_date' },                  
+                  ]}
+                  valueField="value"
+                  labelField="label"
+                  placeholder="حدد تاريخ"
+                  searchPlaceholder="Search..."
+                  onChange={(item) => setFilterOption(item.value)}
             />
 
             </View>
             
-            <MembersTable data={data} searchTerm={searchTerm}></MembersTable>
+            <MembersTable data={filterData()} searchTerm={searchTerm}></MembersTable>
 
     </View>
 )

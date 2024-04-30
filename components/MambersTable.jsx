@@ -4,15 +4,22 @@ import Icon from "react-native-vector-icons/Feather";
 
 const MembersTable = ({ data, searchTerm, onEditUser }) => {
     
-    
+    const filteredData = data.filter((item) => {
+        const fullName = `${item.first_name} ${item.last_name}`.toLowerCase();
+        const searchTermLower = searchTerm.toLowerCase();
+        const matches = fullName.includes(searchTermLower) || item.last_name.toLowerCase().includes(searchTermLower);
+        return matches;
+    });
+
     const renderItem = ({ item }) => (
+
         <View style={{ 
             flexDirection: 'row',  
             paddingVertical: "5%",
             paddingRight:"2%",
             shadowColor: '#000',
             marginVertical:"0.8%",
-            backgroundColor:"white",
+            backgroundColor: new Date(item.end_date) < new Date() ? "rgb(252 165 165)" : "white" ,
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.5,
             shadowRadius: 3,
@@ -32,7 +39,7 @@ const MembersTable = ({ data, searchTerm, onEditUser }) => {
             </View>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <TouchableOpacity
-                  style={{ backgroundColor: 'white', borderRadius: 5}}
+                  style={{ borderRadius: 5}}
                   onPress={() => onEditUser(item)}
                 >
                     <Icon name="edit" color="rgb(37 99 235)" size={24} />
@@ -56,18 +63,18 @@ const MembersTable = ({ data, searchTerm, onEditUser }) => {
     );
 
     return (
-        <View style={{marginTop: 20}}>
-            {data.length === 0 ? (
-                <Text style={{ color: 'gray' }}>لا يوجد أعضاء حاليا</Text>
+        <View style={{flex:1, marginTop: 20,maxHeight:"68%"}}>
+            {filteredData.length === 0 ? (
+                <Text style={{ color: 'gray',alignSelf:"center" }}>لا يوجد أعضاء حاليا</Text>
             ) : (
                 <View>
                     {renderHeader()}
                     <FlatList
-                        data={data}
+                        data={filteredData}
                         renderItem={renderItem}
                         keyExtractor={(item) => item.id}
-                        style={{zIndex:1000}}
-                        />
+                        
+                    />
                 </View>
             )}
         </View>
