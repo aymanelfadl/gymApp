@@ -27,7 +27,7 @@ const MembersTable = ({ data, searchTerm, onEditUser }) => {
         }}>
             <View style={{ flex: 1 ,justifyContent: 'center', alignItems: 'center', paddingHorizontal:10 }}>
                 <Image
-                    source={ item.picture_file }
+                    source={ {uri: item.picture_file} }
                     style={{ width: 40, height: 40, borderRadius: 25 }}
                 />
             </View>

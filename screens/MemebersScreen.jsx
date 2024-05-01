@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/AntDesign";
 import MembersTable from "../components/MambersTable";
 import AvatareLogo from "../assets/woman.png";
 import { SelectCountry } from 'react-native-element-dropdown';
+import EditUserModal from "../components/EditUserModal";
 
 const MembersScreen = () => {
   
@@ -19,8 +20,8 @@ const MembersScreen = () => {
           last_name: "Doe",
           date_birth: "1990-05-15",
           phone_number: "+1234567890",
+          picture_file: "https://via.placeholder.com/640x480.png/009988?text=eius", 
           end_date: "2025-12-31",
-          picture_file: AvatareLogo,
           created_at: "2024-04-1T11:06:24.000Z", // Today
           updated_at: "2024-04-18T11:06:24.000Z",
           active: 1
@@ -31,8 +32,8 @@ const MembersScreen = () => {
           last_name: "Smith",
           date_birth: "1985-08-25",
           phone_number: "+1987654321",
+          picture_file: "https://via.placeholder.com/640x480.png/009988?text=eius", 
           end_date: "2024-04-15",
-          picture_file: AvatareLogo,
           created_at: "2024-04-25T11:08:24.000Z", // Within one week
           updated_at: "2024-04-18T11:08:24.000Z",
           active: 1
@@ -44,7 +45,7 @@ const MembersScreen = () => {
           date_birth: "1993-02-10",
           phone_number: "+1122334455",
           end_date: "2024-08-29",
-          picture_file: AvatareLogo,
+          picture_file: "https://via.placeholder.com/640x480.png/009988?text=eius", 
           created_at: "2024-03-01T11:08:24.000Z", // Within one month
           updated_at: "2024-04-18T11:08:24.000Z",
           active: 1
@@ -56,7 +57,7 @@ const MembersScreen = () => {
           date_birth: "1991-07-20",
           phone_number: "+1231231234",
           end_date: "2023-05-10",
-          picture_file: AvatareLogo,
+          picture_file: "https://via.placeholder.com/640x480.png/009988?text=eius", 
           created_at: "2023-04-01T11:08:24.000Z", // More than one month ago
           updated_at: "2024-04-18T11:08:24.000Z",
           active: 1
@@ -68,7 +69,7 @@ const MembersScreen = () => {
           date_birth: "1988-03-28",
           phone_number: "+9876543210",
           end_date: "2024-11-15",
-          picture_file: AvatareLogo,
+          picture_file: "https://via.placeholder.com/640x480.png/009988?text=eius", 
           created_at: "2023-11-01T11:08:24.000Z", // More than one month ago
           updated_at: "2024-04-18T11:08:24.000Z",
           active: 1
@@ -80,7 +81,7 @@ const MembersScreen = () => {
           date_birth: "1995-12-10",
           phone_number: "+1122334455",
           end_date: "2024-07-02",
-          picture_file: AvatareLogo,
+          picture_file: "https://via.placeholder.com/640x480.png/009988?text=eius", 
           created_at: "2022-03-10T11:08:24.000Z", // More than one month ago
           updated_at: "2024-04-18T11:08:24.000Z",
           active: 1
@@ -92,7 +93,7 @@ const MembersScreen = () => {
           date_birth: "1983-09-18",
           phone_number: "+9998887776",
           end_date: "2023-04-25",
-          picture_file: AvatareLogo,
+          picture_file: "https://via.placeholder.com/640x480.png/009988?text=eius", 
           created_at: "2024-04-29T11:08:24.000Z", // Today
           updated_at: "2024-04-18T11:08:24.000Z",
           active: 0
@@ -104,10 +105,10 @@ const MembersScreen = () => {
           date_birth: "1992-01-30",
           phone_number: "+4567891230",
           end_date: "2022-10-20",
-          picture_file: AvatareLogo,
-          created_at: "2024-03-01T11:08:24.000Z", // More than one month ago
+          picture_file: "https://via.placeholder.com/640x480.png/009988?text=eius", 
+          created_at: "2024-03-01T11:08:24.000Z", 
           updated_at: "2024-04-18T11:08:24.000Z",
-          active: 0// Membership ended
+          active: 0// 
         },
         {
           id: 10,
@@ -116,14 +117,22 @@ const MembersScreen = () => {
           date_birth: "1987-06-12",
           phone_number: "+9876543210",
           end_date: "2025-08-20",
-          picture_file: AvatareLogo,
+          picture_file: "https://via.placeholder.com/640x480.png/009988?text=eius", 
           created_at: "2024-04-25T11:08:24.000Z", 
           updated_at: "2024-04-18T11:08:24.000Z",
           active: 1
         }
       ]);
+
     const [searchTerm, setSearchTerm] = useState("");
     const [filterOption, setFilterOption] = useState('all');
+    const [selectedUser, setSelectedUser] = useState(null);
+    const [isEditUserModalOpen, setIsEditUserModalOpen] = useState(false);
+
+    const handleSelctedUser = (user) =>{
+      setSelectedUser(user);
+      setIsEditUserModalOpen(true);
+    } 
 
 
     const filterData = () => {
@@ -251,7 +260,8 @@ const MembersScreen = () => {
 
             </View>
             
-            <MembersTable data={filterData()} searchTerm={searchTerm}></MembersTable>
+            <MembersTable data={filterData()} searchTerm={searchTerm} onEditUser={handleSelctedUser}></MembersTable>
+            {selectedUser && <EditUserModal visible={isEditUserModalOpen} userData={selectedUser} onClose={() => setIsEditUserModalOpen(false)}/>}
 
     </View>
 )
