@@ -134,6 +134,26 @@ const MembersScreen = () => {
       setIsEditUserModalOpen(true);
     } 
 
+    
+    const handleUserEdit = (userEdit) =>{
+      const index = data.findIndex((user) => user.id === selectedUser.id);
+      if (index !== -1) {
+        const newData = [...data];
+        newData[index] = userEdit;
+        setData(newData);
+        setSelectedUser(null);
+      }
+    }
+    
+    const handleEndUser = () => {
+      const index = data.findIndex((user) => user.id === selectedUser.id);
+      if (index !== -1) {
+        const newData = [...data];
+        newData[index].active = 0;
+        setData(newData);
+        setSelectedUser(null);
+      }
+    };
 
     const filterData = () => {
       let filteredData = [...data];
@@ -261,7 +281,7 @@ const MembersScreen = () => {
             </View>
             
             <MembersTable data={filterData()} searchTerm={searchTerm} onEditUser={handleSelctedUser}></MembersTable>
-            {selectedUser && <EditUserModal visible={isEditUserModalOpen} userData={selectedUser} onClose={() => setIsEditUserModalOpen(false)}/>}
+            {selectedUser && <EditUserModal visible={isEditUserModalOpen} userData={selectedUser} onEditUser={handleUserEdit} onEndUser={handleEndUser} onClose={() => setIsEditUserModalOpen(false)}/>}
 
     </View>
 )

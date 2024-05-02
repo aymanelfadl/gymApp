@@ -1,13 +1,14 @@
 import { useState ,useEffect} from 'react';
-import { PermissionsAndroid,View, Text, Modal, TouchableOpacity, Image, TextInput, Button } from 'react-native';
+import { PermissionsAndroid,View, Text, Modal, TouchableOpacity, Image, TextInput, Button, VirtualizedList } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import Icon from "react-native-vector-icons/AntDesign"
+import { DatePickerInput } from 'react-native-paper-dates';
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) => {
   const [userEdit, setUserEdit] = useState(userData);
   const [newImage, setNewImage] = useState(null);
 
-  console.log(userEdit);
   const requestPermissions = async () => {
     try {
       const granted = await PermissionsAndroid.requestMultiple([
@@ -17,7 +18,7 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) =>
       granted['android.permission.READ_EXTERNAL_STORAGE'] === PermissionsAndroid.RESULTS.GRANTED ? 
         console.log('Camera, storage, and audio recording permissions granted') : console.log('One or more permissions denied');
     } catch (err) {
-      console.warn(err);
+        console.warn(err);
     }
   };
   useEffect(() => {
@@ -29,11 +30,14 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) =>
     launchImageLibrary({ mediaType: 'photo' }, (response) => {
       if (!response.didCancel && !response.error) {
         setNewImage({ uri: response.assets[0].uri });
+        setUserEdit({...userEdit, picture_file: response.assets[0].uri })
       }
     });
   };
 
+  console.log(userEdit);
   return (
+  <SafeAreaProvider>
     <Modal
       animationType="slide"
       transparent={true}
@@ -53,10 +57,11 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) =>
             </View>
           </TouchableOpacity>
           </View>
+          <View style={{backgroundColor:"white",paddingHorizontal:8, borderRadius:10, paddingVertical:10 ,elevation: 3}}>
           <View style={{flexDirection:"row-reverse",justifyContent:"space-between", width:"100%",alignItems:"center"}}>
             <Text style={{textAlign:"right", color:"rgb(37 99 235)", fontWeight:"bold" , fontSize:18}}>الاسم الكامل:</Text>
             <TextInput
-              style={{ borderWidth: 1, borderColor: 'rgb(224 231 255)', borderRadius: 20, width: '60%', padding: 12, marginBottom: 10, color: 'black' }}
+              style={{ borderWidth: 1, borderColor: 'rgb(224 231 255)', borderRadius: 10, width: '60%', padding:8, marginBottom: 10, color: 'black' }}
               placeholder="الاسم الكامل"
               value={userEdit.first_name + " " + userEdit.last_name}
               onChangeText={(text) => {
@@ -72,17 +77,27 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) =>
           </View>
           <View style={{flexDirection:"row-reverse",justifyContent:"space-between", width:"100%",alignItems:"center"}}>
             <Text style={{textAlign:"right", color:"rgb(37 99 235)", fontWeight:"bold" , fontSize:18}}>تاريخ الميلاد:</Text>
-            <TextInput
-              style={{ borderWidth: 1, borderColor: 'rgb(224 231 255)', borderRadius: 20, width: '60%', padding: 12, marginBottom: 10, color: 'black' }}
-              placeholder="تاريخ الميلاد"
-              value={userEdit.date_birth}
-              onChangeText={(text) => setUserEdit({ ...userEdit, date_birth: text })}
-            />
+              <View style={{width:"60%", paddingVertical:15 ,marginBottom:25, marginTop:15}}>
+
+              <DatePickerInput
+                locale="en"
+                label=""
+                inputMode="start"
+                value={new Date(userEdit.date_birth)}
+                onChange={(date) => {
+                  const formattedDate = date.toISOString().split('T')[0];
+                  setUserEdit({ ...userEdit, date_birth: formattedDate });
+                }}
+                iconColor="rgb(37 99 235)"
+                style={{ backgroundColor: "white", borderWidth: 1, borderColor: "rgb(224 231 255)", width: "60%" }}
+              />
+
+              </View>
            </View> 
            <View style={{flexDirection:"row-reverse",justifyContent:"space-between", width:"100%",alignItems:"center"}}>
               <Text style={{textAlign:"right", color:"rgb(37 99 235)", fontWeight:"bold" , fontSize:18}}>رقم الهاتف:</Text>  
               <TextInput
-                style={{ borderWidth: 1, borderColor: 'rgb(224 231 255)', borderRadius: 20, width: '60%', padding: 12, marginBottom: 10, color: 'black' }}
+                style={{ borderWidth: 1, borderColor: 'rgb(224 231 255)', borderRadius: 10, width: '60%', padding: 8, marginBottom: 10, color: 'black' }}
                 placeholder="رقم الهاتف"
                 value={userEdit.phone_number}
                 onChangeText={(text) => setUserEdit({ ...userEdit, phone_number: text })}
@@ -91,7 +106,7 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) =>
           <View style={{flexDirection:"row-reverse",justifyContent:"space-between", width:"100%",alignItems:"center"}}>
             <Text style={{textAlign:"right", color:"rgb(37 99 235)", fontWeight:"bold" , fontSize:18}}>فاتورة جديدة:</Text>   
             <TextInput
-              style={{ borderWidth: 1, borderColor: 'rgb(224 231 255)', borderRadius: 20, width: '60%', padding: 12, marginBottom: 10, color: 'black' }}
+              style={{ borderWidth: 1, borderColor: 'rgb(224 231 255)', borderRadius: 10, width: '60%', padding: 8, marginBottom: 10, color: 'black' }}
               placeholder="المبلغ المؤدى من الزبون"
               placeholderTextColor="rgb(23 37 84)"
               value={userEdit.subscription_amount}
@@ -100,12 +115,19 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) =>
           </View>
           <View style={{flexDirection:"row-reverse",justifyContent:"space-between", width:"100%",alignItems:"center"}}>
             <Text style={{textAlign:"right", color:"rgb(37 99 235)", fontWeight:"bold" , fontSize:18}}>انتهاء العضوية:</Text>   
-            <TextInput
-              style={{ borderWidth: 1, borderColor: 'rgb(224 231 255)', borderRadius: 20, width: '60%', padding: 12, marginBottom: 10, color: 'black' }}
-              placeholder="تاريخ انتهاء العضوية"
-              value={userEdit.end_date}
-              onChangeText={(text) => setUserEdit({ ...userEdit, end_date: text })}
-            />
+            <DatePickerInput
+                locale="en"
+                label=""
+                inputMode="start"
+                value={new Date(userEdit.end_date)}
+                onChange={(date)=>{
+                  const formattedDate = date.toISOString().split('T')[0];
+                  setUserEdit({ ...userEdit, end_date: formattedDate });}}
+                iconColor="rgb(37 99 235)"
+                style={{backgroundColor:"white" , borderWidth:1 , borderColor:"rgb(224 231 255)", width:"60%"}}
+                />  
+          </View>
+          
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'center', width: '100%', padding: 10, marginTop: 10 }}>
             <TouchableOpacity onPress={() => onEndUser(userEdit)} style={{backgroundColor:"white", borderRadius: 100, borderColor: "red", borderWidth: 1, paddingHorizontal: 20, marginHorizontal: 20, padding: 10, elevation: 5 }}>
@@ -119,6 +141,7 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) =>
         </View>
       </View>
     </Modal>
+  </SafeAreaProvider>
   );
 };
 
