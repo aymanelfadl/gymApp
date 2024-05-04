@@ -64,18 +64,6 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) =>
   const showModeEnd = () =>{
     setShowEndDate(!showEndDate);
   }
-  
-
-  const handleFullNameChange = (text) => {
-    const spaceIndex = text.indexOf(" ");
-    setUserEdit({
-        ...userEdit,
-        first_name: spaceIndex !== -1 ? text.substring(0, spaceIndex) : text,
-        last_name: spaceIndex !== -1 ? text.substring(spaceIndex + 1) : "",
-    });
-};
- 
-
   console.log(userEdit);
   return (
   <SafeAreaProvider>
@@ -97,7 +85,7 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) =>
             </View>
           </TouchableOpacity>
           </View>
-          <View style={{backgroundColor:"white",paddingHorizontal:8, borderRadius:10, paddingVertical:10 ,elevation: 3}}>
+      <View style={{backgroundColor:"white",paddingHorizontal:8, borderRadius:10, paddingVertical:10 ,elevation: 3}}>
           <View style={{flexDirection:"row-reverse",justifyContent:"space-between", width:"100%",alignItems:"center"}}>
             <Text style={{textAlign:"right", color:"rgb(37 99 235)", fontWeight:"bold" , fontSize:18}}>الاسم الكامل:</Text>
             <TextInput
