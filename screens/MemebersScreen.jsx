@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Text, View, Dimensions, Image, TextInput, StyleSheet } from "react-native";
-import { Picker } from '@react-native-picker/picker';
 import MembersLogoWhite from "../assets/equipewhite.png";
 import Icon from "react-native-vector-icons/AntDesign";
 import MembersTable from "../components/MambersTable";
-import AvatareLogo from "../assets/woman.png";
 import { SelectCountry } from 'react-native-element-dropdown';
 import EditUserModal from "../components/EditUserModal";
 

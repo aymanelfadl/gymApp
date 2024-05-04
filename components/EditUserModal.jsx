@@ -1,13 +1,15 @@
 import { useState ,useEffect} from 'react';
-import { PermissionsAndroid,View, Text, Modal, TouchableOpacity, Image, TextInput, Button, VirtualizedList } from 'react-native';
+import { PermissionsAndroid,View, Text, Modal, TouchableOpacity, Image, TextInput, } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 import Icon from "react-native-vector-icons/AntDesign"
-import { DatePickerInput } from 'react-native-paper-dates';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) => {
   const [userEdit, setUserEdit] = useState(userData);
   const [newImage, setNewImage] = useState(null);
+  const [showBirthDay, setShowBirthDay] = useState(false);
+  const [showEndDate, setShowEndDate] = useState(false);
 
   const requestPermissions = async () => {
     try {
@@ -35,6 +37,45 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) =>
     });
   };
 
+  const onChangeDateBirthDay = (event, selectedDate) => {
+    if (selectedDate) {
+      const currentDate = selectedDate.toISOString().split('T')[0];
+      setUserEdit({ ...userEdit, date_birth: currentDate });
+    } else {
+      setUserEdit({ ...userEdit, date_birth: userEdit.date_birth });
+    }
+    setShowBirthDay(false);
+  };
+
+  const onChangeDateEnd= (event, selectedDate) => {
+    if (selectedDate) {
+      const currentDate = selectedDate.toISOString().split('T')[0];
+      setUserEdit({ ...userEdit, end_date: currentDate });
+    } else {
+      setUserEdit({ ...userEdit, end_date: userEdit.end_date });
+    }
+    setShowEndDate(false);
+  };
+
+  const showMode = () => {
+    setShowBirthDay(!showBirthDay);
+  }
+
+  const showModeEnd = () =>{
+    setShowEndDate(!showEndDate);
+  }
+  
+
+  const handleFullNameChange = (text) => {
+    const spaceIndex = text.indexOf(" ");
+    setUserEdit({
+        ...userEdit,
+        first_name: spaceIndex !== -1 ? text.substring(0, spaceIndex) : text,
+        last_name: spaceIndex !== -1 ? text.substring(spaceIndex + 1) : "",
+    });
+};
+ 
+
   console.log(userEdit);
   return (
   <SafeAreaProvider>
@@ -45,7 +86,7 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) =>
       onRequestClose={() => onClose()}
     >
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-        <View style={{ backgroundColor: "white" , padding: 20, borderRadius: 10, width: '80%', alignItems: 'center' }}>
+        <View style={{ backgroundColor: "white" , padding: 20, borderRadius: 10, width: '90%', alignItems: 'center' }}>
           <TouchableOpacity onPress={onClose} style={{ position: 'absolute', top: 10, right: 10 }}>
             <Icon name="close" color="black" size={20}/> 
           </TouchableOpacity>
@@ -53,7 +94,6 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) =>
           <TouchableOpacity onPress={handleLaunchImageLibrary}>
             <View style={{ width: 100, height: 100, borderRadius: 50, backgroundColor: 'lightgray', justifyContent: 'center', alignItems: 'center', marginBottom: 20 }}>
               <Image source={{ uri: newImage ? newImage.uri : userEdit.picture_file }} style={{ width: 100, height: 100, borderRadius: 50 }} />
-                 <Icon name="camera" size={20} color="white" style={{ position: 'absolute', }} />
             </View>
           </TouchableOpacity>
           </View>
@@ -77,21 +117,16 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) =>
           </View>
           <View style={{flexDirection:"row-reverse",justifyContent:"space-between", width:"100%",alignItems:"center"}}>
             <Text style={{textAlign:"right", color:"rgb(37 99 235)", fontWeight:"bold" , fontSize:18}}>تاريخ الميلاد:</Text>
-              <View style={{width:"60%", paddingVertical:15 ,marginBottom:25, marginTop:15}}>
-
-              <DatePickerInput
-                locale="en"
-                label=""
-                inputMode="start"
-                value={new Date(userEdit.date_birth)}
-                onChange={(date) => {
-                  const formattedDate = date.toISOString().split('T')[0];
-                  setUserEdit({ ...userEdit, date_birth: formattedDate });
-                }}
-                iconColor="rgb(37 99 235)"
-                style={{ backgroundColor: "white", borderWidth: 1, borderColor: "rgb(224 231 255)", width: "60%" }}
-              />
-
+              <View style={{width:"60%", paddingVertical:12}}>
+                    <Text style={{ borderWidth: 1, borderColor: 'rgb(224 231 255)', borderRadius: 10, width: '100%', padding:10,color: 'black' }}>
+                      {userEdit.date_birth} 
+                    </Text>
+                  <View style={{position:"absolute" , right:"5%",top:"50%", alignSelf:"center"}}>
+                    <TouchableOpacity onPress={showMode}>
+                      <Icon name="calendar" size={20} color="rgb(59 130 246)" />
+                    </TouchableOpacity>
+                  </View>
+                  {showBirthDay && <DateTimePicker testID='dateTimePicker' value={new Date(userEdit.date_birth)} onChange={onChangeDateBirthDay} />}
               </View>
            </View> 
            <View style={{flexDirection:"row-reverse",justifyContent:"space-between", width:"100%",alignItems:"center"}}>
@@ -115,17 +150,17 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) =>
           </View>
           <View style={{flexDirection:"row-reverse",justifyContent:"space-between", width:"100%",alignItems:"center"}}>
             <Text style={{textAlign:"right", color:"rgb(37 99 235)", fontWeight:"bold" , fontSize:18}}>انتهاء العضوية:</Text>   
-            <DatePickerInput
-                locale="en"
-                label=""
-                inputMode="start"
-                value={new Date(userEdit.end_date)}
-                onChange={(date)=>{
-                  const formattedDate = date.toISOString().split('T')[0];
-                  setUserEdit({ ...userEdit, end_date: formattedDate });}}
-                iconColor="rgb(37 99 235)"
-                style={{backgroundColor:"white" , borderWidth:1 , borderColor:"rgb(224 231 255)", width:"60%"}}
-                />  
+            <View style={{width:"60%", paddingVertical:12}}>
+                    <Text style={{ borderWidth: 1, borderColor: 'rgb(224 231 255)', borderRadius: 10, width: '100%', padding:10,color: 'black' }}>
+                      {userEdit.end_date} 
+                    </Text>
+                  <View style={{position:"absolute" , right:"5%",top:"50%", alignSelf:"center"}}>
+                    <TouchableOpacity onPress={showModeEnd}>
+                      <Icon name="calendar" size={20} color="rgb(59 130 246)" />
+                    </TouchableOpacity>
+                  </View>
+                  {showEndDate && <DateTimePicker testID='dateTimePicker' value={new Date(userEdit.end_date)} onChange={onChangeDateEnd} />}
+              </View>
           </View>
           
           </View>
