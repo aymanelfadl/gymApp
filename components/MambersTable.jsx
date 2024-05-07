@@ -63,7 +63,7 @@ const MembersTable = ({ data, searchTerm, onEditUser }) => {
     );
 
     return (
-        <View style={{flex:1, marginTop: 20,maxHeight:"68%"}}>
+        <View style={{flex:1, marginTop: 20 , maxHeight:"66%"}}>
             {filteredData.length === 0 ? (
                 <Text style={{ color: 'gray',alignSelf:"center" }}>لا يوجد أعضاء حاليا</Text>
             ) : (

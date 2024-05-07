@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/AntDesign"
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) => {
+const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible, onReturnUser }) => {
   const [userEdit, setUserEdit] = useState(userData);
   const [newImage, setNewImage] = useState(null);
   const [showBirthDay, setShowBirthDay] = useState(false);
@@ -66,7 +66,7 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) =>
   }
   console.log(userEdit);
   return (
-  <SafeAreaProvider>
+  // <SafeAreaProvider>
     <Modal
       animationType="slide"
       transparent={true}
@@ -153,9 +153,15 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) =>
           
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'center', width: '100%', padding: 10, marginTop: 10 }}>
-            <TouchableOpacity onPress={() => onEndUser(userEdit)} style={{backgroundColor:"white", borderRadius: 100, borderColor: "red", borderWidth: 1, paddingHorizontal: 20, marginHorizontal: 20, padding: 10, elevation: 5 }}>
-              <Text style={{ color: 'red', fontSize: 18 }}>انهاء العضوية</Text>
-            </TouchableOpacity>
+            {userEdit.active === 1 ? (
+              <TouchableOpacity onPress={() => onEndUser(userEdit)} style={{backgroundColor:"white", borderRadius: 100, borderColor: "red", borderWidth: 1, paddingHorizontal: 20, marginHorizontal: 20, padding: 10, elevation: 5 }}>
+                <Text style={{ color: 'red', fontSize: 18 }}>انهاء العضوية</Text>
+              </TouchableOpacity>
+            ):(
+              <TouchableOpacity onPress={() => onReturnUser(userEdit)} style={{backgroundColor:"white", borderRadius: 100, borderColor: "green", borderWidth: 1, paddingHorizontal: 20, marginHorizontal: 20, padding: 10, elevation: 5 }}>
+                <Text style={{ color: 'green', fontSize: 18 }}>إرجاع العضوية</Text>
+              </TouchableOpacity>
+            )}
             <TouchableOpacity onPress={() => onEditUser(userEdit)} style={{ borderRadius: 100, paddingHorizontal: 25, marginHorizontal: 20, backgroundColor: "blue", padding: 10, elevation: 5 }}>
               <Text style={{ color: 'white', fontSize: 18 }}>حفظ</Text>
             </TouchableOpacity>
@@ -164,7 +170,7 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible }) =>
         </View>
       </View>
     </Modal>
-  </SafeAreaProvider>
+ 
   );
 };
 

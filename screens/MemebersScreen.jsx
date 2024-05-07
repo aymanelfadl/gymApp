@@ -92,7 +92,7 @@ const MembersScreen = () => {
           phone_number: "+9998887776",
           end_date: "2023-04-25",
           picture_file: "https://via.placeholder.com/640x480.png/009988?text=eius", 
-          created_at: "2024-04-29T11:08:24.000Z", // Today
+          created_at: "2024-04-29T11:08:24.000Z", 
           updated_at: "2024-04-18T11:08:24.000Z",
           active: 0
         },
@@ -152,6 +152,17 @@ const MembersScreen = () => {
         setSelectedUser(null);
       }
     };
+
+    const handleReturnUser = () => {
+      const index = data.findIndex((user) => user.id === selectedUser.id);
+      if (index !== -1) {
+        const newData = [...data];
+        newData[index].active = 1;
+        setData(newData);
+        setSelectedUser(null);
+      }
+    };
+
 
     const filterData = () => {
       let filteredData = [...data];
@@ -278,9 +289,8 @@ const MembersScreen = () => {
 
             </View>
             
-            <MembersTable data={filterData()} searchTerm={searchTerm} onEditUser={handleSelctedUser}></MembersTable>
-            {selectedUser && <EditUserModal visible={isEditUserModalOpen} userData={selectedUser} onEditUser={handleUserEdit} onEndUser={handleEndUser} onClose={() => setIsEditUserModalOpen(false)}/>}
-
+            <MembersTable data={filterData()} searchTerm={searchTerm} onEditUser={handleSelctedUser}/>
+            {selectedUser && <EditUserModal visible={isEditUserModalOpen} userData={selectedUser} onEditUser={handleUserEdit} onEndUser={handleEndUser} onReturnUser={handleReturnUser} onClose={() => setIsEditUserModalOpen(false)}/>}
     </View>
 )
 }
