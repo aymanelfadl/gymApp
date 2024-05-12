@@ -3,9 +3,10 @@ import { PermissionsAndroid,View, Text, Modal, TouchableOpacity, Image, TextInpu
 import { launchImageLibrary } from 'react-native-image-picker';
 import Icon from "react-native-vector-icons/AntDesign"
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { SafeAreaProvider } from "react-native-safe-area-context";
+
 
 const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible, onReturnUser }) => {
+  
   const [userEdit, setUserEdit] = useState(userData);
   const [newImage, setNewImage] = useState(null);
   const [showBirthDay, setShowBirthDay] = useState(false);
@@ -64,9 +65,10 @@ const EditUserModal = ({ onClose, userData, onEditUser, onEndUser, visible, onRe
   const showModeEnd = () =>{
     setShowEndDate(!showEndDate);
   }
+
   console.log(userEdit);
+  
   return (
-  // <SafeAreaProvider>
     <Modal
       animationType="slide"
       transparent={true}

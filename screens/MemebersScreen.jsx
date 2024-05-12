@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/AntDesign";
 import MembersTable from "../components/MambersTable";
 import { SelectCountry } from 'react-native-element-dropdown';
 import EditUserModal from "../components/EditUserModal";
-
+import HistPaymentModal from "../components/HistPaymentModal";
 const MembersScreen = () => {
   
     const windowHeight = Dimensions.get('window').height;
@@ -121,11 +121,91 @@ const MembersScreen = () => {
           active: 1
         }
       ]);
-
+      const [paymentHistData, setPaymentHistData] = useState([
+        {
+          id: 1,
+          id_user: 4,
+          paid_price: "790.24",
+          created_at: "2024-04-18T11:12:16.000000Z",
+          updated_at: "2024-04-18T11:12:16.000000Z"
+        },
+        {
+          id: 2,
+          id_user: 4,
+          paid_price: "405.86",
+          created_at: "2024-04-18T11:12:16.000000Z",
+          updated_at: "2024-04-18T11:12:16.000000Z"
+        },
+        {
+          id: 3,
+          id_user: 4,
+          paid_price: "806.28",
+          created_at: "2024-04-18T11:12:16.000000Z",
+          updated_at: "2024-04-18T11:12:16.000000Z"
+        }, {
+          id: 4,
+          id_user: 4,
+          paid_price: "790.24",
+          created_at: "2024-04-18T11:12:16.000000Z",
+          updated_at: "2024-04-18T11:12:16.000000Z"
+        },
+        {
+          id: 5,
+          id_user: 4,
+          paid_price: "405.86",
+          created_at: "2024-04-18T11:12:16.000000Z",
+          updated_at: "2024-04-18T11:12:16.000000Z"
+        },
+        {
+          id: 6,
+          id_user: 4,
+          paid_price: "806.28",
+          created_at: "2024-04-18T11:12:16.000000Z",
+          updated_at: "2024-04-18T11:12:16.000000Z"
+        },
+        {
+          id: 7,
+          id_user: 4,
+          paid_price: "790.24",
+          created_at: "2024-04-18T11:12:16.000000Z",
+          updated_at: "2024-04-18T11:12:16.000000Z"
+        },
+        {
+          id: 8,
+          id_user: 4,
+          paid_price: "405.86",
+          created_at: "2024-04-18T11:12:16.000000Z",
+          updated_at: "2024-04-18T11:12:16.000000Z"
+        },
+        {
+          id: 9,
+          id_user: 4,
+          paid_price: "806.28",
+          created_at: "2024-04-18T11:12:16.000000Z",
+          updated_at: "2024-04-18T11:12:16.000000Z"
+        }, {
+          id: 10,
+          id_user: 4,
+          paid_price: "790.24",
+          created_at: "2024-04-18T11:12:16.000000Z",
+          updated_at: "2024-04-18T11:12:16.000000Z"
+        },
+        {
+          id: 90,
+          id_user: 4,
+          paid_price: "405.86",
+          created_at: "2024-04-18T11:12:16.000000Z",
+          updated_at: "2024-04-18T11:12:16.000000Z"
+        }
+    
+      ]);
+      
     const [searchTerm, setSearchTerm] = useState("");
     const [filterOption, setFilterOption] = useState('all');
     const [selectedUser, setSelectedUser] = useState(null);
     const [isEditUserModalOpen, setIsEditUserModalOpen] = useState(false);
+    const [showHistPayment , setShowHistPayment] = useState(false);
+
 
     const handleSelctedUser = (user) =>{
       setSelectedUser(user);
@@ -166,6 +246,13 @@ const MembersScreen = () => {
     const handleUserEditClose = () =>{
       setSelectedUser(null);
       setIsEditUserModalOpen(false);
+    }
+
+
+    const handleHistPayment = (id) =>{
+      console.log(id);
+      setSelectedUser(data.at(id));
+      setShowHistPayment(true);
     }
 
 
@@ -294,8 +381,30 @@ const MembersScreen = () => {
 
             </View>
             
-            <MembersTable data={filterData()} searchTerm={searchTerm} onEditUser={handleSelctedUser}/>
-            {selectedUser && <EditUserModal visible={isEditUserModalOpen} userData={selectedUser} onEditUser={handleUserEdit} onEndUser={handleEndUser} onReturnUser={handleReturnUser} onClose={handleUserEditClose}/>}
+            <MembersTable 
+              data={filterData()}
+              searchTerm={searchTerm}
+              onEditUser={handleSelctedUser}
+              onOpenHistPayment={handleHistPayment}
+            />
+
+            {isEditUserModalOpen &&
+              <EditUserModal
+                visible={isEditUserModalOpen}
+                userData={selectedUser}
+                onEditUser={handleUserEdit}
+                onEndUser={handleEndUser}
+                onReturnUser={handleReturnUser}
+                onClose={handleUserEditClose}/>
+            }
+
+            {showHistPayment && 
+              <HistPaymentModal 
+                userData={selectedUser}
+                userHistPaymentData={paymentHistData}   
+                onClose={()=>setShowHistPayment(false)}
+              />
+            }
     </View>
 )
 }

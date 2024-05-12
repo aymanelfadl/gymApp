@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
 import Icon from "react-native-vector-icons/Feather";
 
-const MembersTable = ({ data, searchTerm, onEditUser }) => {
+const MembersTable = ({ data, searchTerm, onEditUser , onOpenHistPayment}) => {
     
     const filteredData = data.filter((item) => {
         const fullName = `${item.first_name} ${item.last_name}`.toLowerCase();
@@ -10,6 +10,7 @@ const MembersTable = ({ data, searchTerm, onEditUser }) => {
         const matches = fullName.includes(searchTermLower) || item.last_name.toLowerCase().includes(searchTermLower);
         return matches;
     });
+
 
     const renderItem = ({ item }) => (
 
@@ -24,19 +25,20 @@ const MembersTable = ({ data, searchTerm, onEditUser }) => {
             shadowOpacity: 0.5,
             shadowRadius: 3,
             elevation:5 , 
+            
         }}>
-            <View style={{ flex: 1 ,justifyContent: 'center', alignItems: 'center', paddingHorizontal:10 }}>
+            <TouchableOpacity onPress={()=>onOpenHistPayment(item.id)} style={{ flex: 1 ,justifyContent: 'center', alignItems: 'center', paddingHorizontal:10 }}>
                 <Image
                     source={ {uri: item.picture_file} }
                     style={{ width: 40, height: 40, borderRadius: 25 }}
                 />
-            </View>
-            <View style={{ flex: 3, justifyContent: 'center', alignItems: 'center' }}>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>onOpenHistPayment(item.id)} style={{ flex: 3, justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{ color:"black",fontWeight: 'bold' }}>{item.first_name} {item.last_name}</Text>
-            </View>
-            <View style={{ flex: 3, justifyContent: 'center', alignItems: 'center' }}>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={()=>onOpenHistPayment(item.id)} style={{ flex: 3, justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{color:"black", fontWeight:"bold"}}>{item.end_date}</Text>
-            </View>
+            </TouchableOpacity>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <TouchableOpacity
                   style={{ borderRadius: 5}}
