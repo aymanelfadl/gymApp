@@ -163,6 +163,11 @@ const MembersScreen = () => {
       }
     };
 
+    const handleUserEditClose = () =>{
+      setSelectedUser(null);
+      setIsEditUserModalOpen(false);
+    }
+
 
     const filterData = () => {
       let filteredData = [...data];
@@ -290,7 +295,7 @@ const MembersScreen = () => {
             </View>
             
             <MembersTable data={filterData()} searchTerm={searchTerm} onEditUser={handleSelctedUser}/>
-            {selectedUser && <EditUserModal visible={isEditUserModalOpen} userData={selectedUser} onEditUser={handleUserEdit} onEndUser={handleEndUser} onReturnUser={handleReturnUser} onClose={() => setIsEditUserModalOpen(false)}/>}
+            {selectedUser && <EditUserModal visible={isEditUserModalOpen} userData={selectedUser} onEditUser={handleUserEdit} onEndUser={handleEndUser} onReturnUser={handleReturnUser} onClose={handleUserEditClose}/>}
     </View>
 )
 }
