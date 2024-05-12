@@ -10,6 +10,7 @@ import CustomTabBar from './components/CustomTabBar';
 import Header from './components/Header';
 import AddUserScreen from './screens/AddUSerScreen';
 import MembersScreen from './screens/MemebersScreen';
+import BillsScreen from './screens/BillsScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -49,6 +50,8 @@ const HomeDrawer = () => {
     >
       <Drawer.Screen name="Home" component={HomeTabs} />
       <Drawer.Screen name="members" component={MemebrsTabs} />
+      <Drawer.Screen name="bills" component={BillsScreen} />
+      
     </Drawer.Navigator>
   );
 };
